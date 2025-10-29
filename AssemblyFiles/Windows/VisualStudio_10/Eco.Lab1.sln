@@ -1,9 +1,34 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual C++ Express 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eco.Lab1", "Eco.Lab1.vcxproj", "{36718CB1-20CF-4A46-A920-E579213DD062}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC} = {EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1} = {28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}
+		{DF63A596-10EE-452F-8900-4CBE790FD36F} = {DF63A596-10EE-452F-8900-4CBE790FD36F}
+		{53394497-3F5D-405C-A34E-60ACC0A3A827} = {53394497-3F5D-405C-A34E-60ACC0A3A827}
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616} = {C03BB3CA-878C-45A7-BE16-7AC3232C7616}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eco.Lab1UnitTest", "Eco.Lab1UnitTest.vcxproj", "{C5C7411B-A740-483B-B248-C0ACBFF51101}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC} = {EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1} = {28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}
+		{DF63A596-10EE-452F-8900-4CBE790FD36F} = {DF63A596-10EE-452F-8900-4CBE790FD36F}
+		{53394497-3F5D-405C-A34E-60ACC0A3A827} = {53394497-3F5D-405C-A34E-60ACC0A3A827}
+		{36718CB1-20CF-4A46-A920-E579213DD062} = {36718CB1-20CF-4A46-A920-E579213DD062}
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616} = {C03BB3CA-878C-45A7-BE16-7AC3232C7616}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eco.CalculatorA", "Eco.CalculatorA\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorA.vcxproj", "{DF63A596-10EE-452F-8900-4CBE790FD36F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eco.CalculatorB", "Eco.CalculatorB\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorB.vcxproj", "{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eco.CalculatorC", "Eco.CalculatorC\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC.vcxproj", "{C03BB3CA-878C-45A7-BE16-7AC3232C7616}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eco.CalculatorD", "Eco.CalculatorD\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorD.vcxproj", "{53394497-3F5D-405C-A34E-60ACC0A3A827}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Eco.CalculatorE", "Eco.CalculatorE\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorE.vcxproj", "{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +54,46 @@ Global
 		{C5C7411B-A740-483B-B248-C0ACBFF51101}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
 		{C5C7411B-A740-483B-B248-C0ACBFF51101}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
 		{C5C7411B-A740-483B-B248-C0ACBFF51101}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.DynamicDebug|Win32.ActiveCfg = DynamicDebug|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.DynamicDebug|Win32.Build.0 = DynamicDebug|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.DynamicRelease|Win32.ActiveCfg = DynamicRelease|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.DynamicRelease|Win32.Build.0 = DynamicRelease|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.StaticDebug|Win32.ActiveCfg = StaticDebug|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
+		{DF63A596-10EE-452F-8900-4CBE790FD36F}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.DynamicDebug|Win32.ActiveCfg = DynamicDebug|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.DynamicDebug|Win32.Build.0 = DynamicDebug|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.DynamicRelease|Win32.ActiveCfg = DynamicRelease|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.DynamicRelease|Win32.Build.0 = DynamicRelease|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.StaticDebug|Win32.ActiveCfg = StaticDebug|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
+		{EE8DD73D-84F1-437A-8CB0-200A8F3D00CC}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.DynamicDebug|Win32.ActiveCfg = DynamicDebug|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.DynamicDebug|Win32.Build.0 = DynamicDebug|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.DynamicRelease|Win32.ActiveCfg = DynamicRelease|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.DynamicRelease|Win32.Build.0 = DynamicRelease|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.StaticDebug|Win32.ActiveCfg = StaticDebug|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
+		{C03BB3CA-878C-45A7-BE16-7AC3232C7616}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.DynamicDebug|Win32.ActiveCfg = DynamicDebug|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.DynamicDebug|Win32.Build.0 = DynamicDebug|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.DynamicRelease|Win32.ActiveCfg = DynamicRelease|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.DynamicRelease|Win32.Build.0 = DynamicRelease|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.StaticDebug|Win32.ActiveCfg = StaticDebug|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
+		{53394497-3F5D-405C-A34E-60ACC0A3A827}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.DynamicDebug|Win32.ActiveCfg = DynamicDebug|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.DynamicDebug|Win32.Build.0 = DynamicDebug|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.DynamicRelease|Win32.ActiveCfg = DynamicRelease|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.DynamicRelease|Win32.Build.0 = DynamicRelease|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.StaticDebug|Win32.ActiveCfg = StaticDebug|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.StaticDebug|Win32.Build.0 = StaticDebug|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.StaticRelease|Win32.ActiveCfg = StaticRelease|Win32
+		{28BCBF50-BDA8-46F4-88CA-6F6D903A58A1}.StaticRelease|Win32.Build.0 = StaticRelease|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

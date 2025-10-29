@@ -1,0 +1,16 @@
+﻿Build started 18.10.2025 11:23:47.
+     1>Project "C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorD.vcxproj" on node 2 (build target(s)).
+     1>InitializeBuildStatus:
+         Touching "Eco.CalculatorD\StaticDebug\Eco.CalculatorD.unsuccessfulbuild".
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\..\HeaderFiles /I..\..\..\SharedFiles /I..\..\..\..\..\Lesson02\Eco.CalculatorA\SharedFiles /I..\..\..\..\..\Lesson03\Eco.CalculatorB\SharedFiles /I"C:\Users\makov\Downloads\Eco.Framework_20250429 (1)\Eco.Core1\SharedFiles" /I"C:\Users\makov\Downloads\Eco.Framework_20250429 (1)\Eco.MemoryManager1\SharedFiles" /I"C:\Users\makov\Downloads\Eco.Framework_20250429 (1)\Eco.InterfaceBus1\SharedFiles" /ZI /nologo /W3 /WX- /Od /Oy- /D ECO_WINDOWS /D ECO_WIN32 /D _DEBUG /D ECO_X86_32 /D _WINDOWS /D ECO_LIB /D UGUID_UTILITY /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Eco.CalculatorD\StaticDebug\\" /Fd"Eco.CalculatorD\StaticDebug\vc100.pdb" /Gz /TC /analyze- /errorReport:prompt ..\..\..\SourceFiles\CEcoCalculatorD.c ..\..\..\SourceFiles\CEcoCalculatorDFactory.c
+         CEcoCalculatorDFactory.c
+     1>c1 : fatal error C1083: Cannot open source file: '..\..\..\SourceFiles\CEcoCalculatorDFactory.c': No such file or directory
+         CEcoCalculatorD.c
+     1>c1 : fatal error C1083: Cannot open source file: '..\..\..\SourceFiles\CEcoCalculatorD.c': No such file or directory
+         Generating Code...
+     1>Done Building Project "C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorD.vcxproj" (build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.43

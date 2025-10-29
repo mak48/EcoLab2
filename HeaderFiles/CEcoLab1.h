@@ -4,80 +4,71 @@
 #include "IEcoLab1.h"
 #include "IEcoSystem1.h"
 #include "IdEcoMemoryManager1.h"
+#include "IEcoCalculatorX.h"
+#include "IEcoCalculatorY.h"
+#include "IdEcoCalculatorA.h"
+#include "IdEcoCalculatorB.h"
+#include "IdEcoCalculatorD.h"
+#include "IdEcoCalculatorE.h"
 
 /* Структура вектора */
 typedef struct CEcoVector {
-
     /* Таблица функций интерфейса IEcoVector */
     IEcoVectorVTbl* m_pVTblIEcoVector;
-
     /* Счетчик ссылок */
     uint32_t m_cRef;
-
     /* Интерфейс для работы с памятью */
     IEcoMemoryAllocator1* m_pIMem;
-
     /* Данные вектора */
     uint32_t m_size;
     double* m_data;
-
 } CEcoVector, *CEcoVectorPtr;
 
 /* Структура матрицы */
 typedef struct CEcoMatrix {
-
     /* Таблица функций интерфейса IEcoMatrix */
     IEcoMatrixVTbl* m_pVTblIEcoMatrix;
-
     /* Счетчик ссылок */
     uint32_t m_cRef;
-
     /* Интерфейс для работы с памятью */
     IEcoMemoryAllocator1* m_pIMem;
-
     /* Данные матрицы */
     uint32_t m_rows;
     uint32_t m_cols;
     double* m_data;
-
 } CEcoMatrix, *CEcoMatrixPtr;
 
 /* Структура линейной алгебры */
 typedef struct CEcoLinearAlgebra {
-
     /* Таблица функций интерфейса IEcoLinearAlgebra */
     IEcoLinearAlgebraVTbl* m_pVTblIEcoLinearAlgebra;
-
     /* Счетчик ссылок */
     uint32_t m_cRef;
-
     /* Интерфейс для работы с памятью */
     IEcoMemoryAllocator1* m_pIMem;
-
     /* Системный интерфейс */
     IEcoSystem1* m_pISys;
-
 } CEcoLinearAlgebra, *CEcoLinearAlgebraPtr;
 
 typedef struct CEcoLab1 {
-
     /* Таблица функций интерфейса IEcoLab1 */
     IEcoLab1VTbl* m_pVTblIEcoLab1;
-
     /* Счетчик ссылок */
     uint32_t m_cRef;
-
     /* Интерфейс для работы с памятью */
     IEcoMemoryAllocator1* m_pIMem;
-
     /* Системный интерфейс */
     IEcoSystem1* m_pISys;
-
     /* Данные экземпляра */
     char_t* m_Name;
-
-    /* Интерфейс линейной алгебры */
+    
+    /* Агрегированные интерфейсы */
     IEcoLinearAlgebra* m_pILinearAlgebra;
+    IEcoCalculatorX* m_pIX;
+    IEcoCalculatorY* m_pIY;
+    
+    /* Внешний агрегатор (если есть) */
+    IEcoUnknown* m_pIUnkOuter;
 
 } CEcoLab1, *CEcoLab1Ptr;
 

@@ -1,0 +1,27 @@
+﻿Build started 30.10.2025 2:06:48.
+     1>Project "C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC.vcxproj" on node 3 (rebuild target(s)).
+     1>_PrepareForClean:
+         Deleting file "Eco.CalculatorC\DynamicDebug\Eco.CalculatorC.lastbuildstate".
+       InitializeBuildStatus:
+         Creating "Eco.CalculatorC\DynamicDebug\Eco.CalculatorC.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I..\..\..\HeaderFiles /I..\..\..\SharedFiles /I"C:\Users\makov\Downloads\Eco.Framework_20250429 (1)\Eco.Core1\SharedFiles" /I"C:\Users\makov\Downloads\Eco.Framework_20250429 (1)\Eco.MemoryManager1\SharedFiles" /I"C:\Users\makov\Downloads\Eco.Framework_20250429 (1)\Eco.InterfaceBus1\SharedFiles" /ZI /nologo /W3 /WX- /Od /Oy- /D ECO_WINDOWS /D ECO_WIN32 /D ECO_X86_32 /D _DEBUG /D _WINDOWS /D ECO_DLL /D UGUID_UTILITY /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Eco.CalculatorC\DynamicDebug\\" /Fd"Eco.CalculatorC\DynamicDebug\vc100.pdb" /Gz /TC /analyze- /errorReport:prompt ..\..\..\SourceFiles\CEcoCalculatorC.c ..\..\..\SourceFiles\CEcoCalculatorCFactory.c
+         CEcoCalculatorCFactory.c
+         CEcoCalculatorC.c
+         Generating Code...
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\Microsoft.CppBuild.targets(990,5): warning MSB8012: TargetPath(C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.dll) does not match the Linker's OutputFile property value (C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\BuildFiles\Windows\x86\DynamicDebug\4828F6552E4540E78121EBD220DC360E.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"..\..\..\BuildFiles\Windows\x86\DynamicDebug\4828F6552E4540E78121EBD220DC360E.dll" /VERSION:"2.0" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.lib" /MACHINE:X86 /DLL Eco.CalculatorC\DynamicDebug\CEcoCalculatorC.obj
+         Eco.CalculatorC\DynamicDebug\CEcoCalculatorCFactory.obj
+            Creating library C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.lib and object C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.exp
+         Eco.CalculatorC.vcxproj -> C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.dll
+       Manifest:
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"..\..\..\BuildFiles\Windows\x86\DynamicDebug\4828F6552E4540E78121EBD220DC360E.dll;#2" /manifest Eco.CalculatorC\DynamicDebug\4828F6552E4540E78121EBD220DC360E.dll.intermediate.manifest
+       FinalizeBuildStatus:
+         Deleting file "Eco.CalculatorC\DynamicDebug\Eco.CalculatorC.unsuccessfulbuild".
+         Touching "Eco.CalculatorC\DynamicDebug\Eco.CalculatorC.lastbuildstate".
+     1>Done Building Project "C:\Users\makov\Downloads\Eco.Lab1_20250409 (2)\Eco.Lab1\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC\AssemblyFiles\Windows\VisualStudio_10\Eco.CalculatorC.vcxproj" (rebuild target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.41

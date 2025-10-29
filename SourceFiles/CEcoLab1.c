@@ -1,4 +1,8 @@
-﻿/*
+﻿#include "IEcoSystem1.h"
+#include "IEcoInterfaceBus1.h"
+#include "IEcoInterfaceBus1MemExt.h"
+#include "CEcoLab1.h"
+/*
  * <кодировка символов>
  *   Cyrillic (UTF-8 with signature) - Codepage 65001
  * </кодировка символов>
@@ -16,7 +20,6 @@
  * </автор>
  *
  */
-
 #include "IEcoSystem1.h"
 #include "IEcoInterfaceBus1.h"
 #include "IEcoInterfaceBus1MemExt.h"
@@ -541,7 +544,6 @@ void ECOCALLMETHOD deleteCEcoLinearAlgebra(/* in */ IEcoLinearAlgebra* pIEcoLine
 }
 
 /* ==================== Реализация CEcoLab1 ==================== */
-
 static int16_t ECOCALLMETHOD CEcoLab1_QueryInterface(/* in */ IEcoLab1Ptr_t me, /* in */ const UGUID* riid, /* out */ void** ppv) {
     CEcoLab1* pCMe = (CEcoLab1*)me;
 
@@ -560,6 +562,66 @@ static int16_t ECOCALLMETHOD CEcoLab1_QueryInterface(/* in */ IEcoLab1Ptr_t me, 
         if (pCMe->m_pILinearAlgebra != 0) {
             *ppv = pCMe->m_pILinearAlgebra;
             pCMe->m_pILinearAlgebra->pVTbl->AddRef(pCMe->m_pILinearAlgebra);
+        } else {
+            *ppv = 0;
+            return ERR_ECO_NOINTERFACE;
+        }
+    }
+    else if ( IsEqualUGUID(riid, &IID_IEcoCalculatorX) ) {
+        if (pCMe->m_pIX == 0) {
+            /* Попытка получить интерфейс через агрегирование */
+            IEcoInterfaceBus1* pIBus = 0;
+            int16_t result = pCMe->m_pISys->pVTbl->QueryInterface(pCMe->m_pISys, &IID_IEcoInterfaceBus1, (void **)&pIBus);
+            if (result == 0 && pIBus != 0) {
+                /* Пробуем получить компонент E (агрегирует B) */
+                result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorE, pCMe->m_pIUnkOuter, &IID_IEcoCalculatorY, (void**) &pCMe->m_pIY);
+                if (result == 0 && pCMe->m_pIY != 0) {
+                    result = pCMe->m_pIY->pVTbl->QueryInterface(pCMe->m_pIY, &IID_IEcoCalculatorX, (void**) &pCMe->m_pIX);
+                }
+                else {
+                    /* Пробуем получить компонент D (включает A) */
+                    result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorD, pCMe->m_pIUnkOuter, &IID_IEcoCalculatorY, (void**) &pCMe->m_pIY);
+                    if (result == 0 && pCMe->m_pIY != 0) {
+                        result = pCMe->m_pIY->pVTbl->QueryInterface(pCMe->m_pIY, &IID_IEcoCalculatorX, (void**) &pCMe->m_pIX);
+                    }
+                    else {
+                        /* Пробуем компонент B напрямую */
+                        result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorB, pCMe->m_pIUnkOuter, &IID_IEcoCalculatorX, (void**) &pCMe->m_pIX);
+                        if (result != 0 || pCMe->m_pIX == 0) {
+                            /* Пробуем компонент A напрямую */
+                            result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorA, pCMe->m_pIUnkOuter, &IID_IEcoCalculatorX, (void**) &pCMe->m_pIX);
+                        }
+                    }
+                }
+                pIBus->pVTbl->Release(pIBus);
+            }
+        }
+        if (pCMe->m_pIX != 0) {
+            *ppv = pCMe->m_pIX;
+            pCMe->m_pIX->pVTbl->AddRef(pCMe->m_pIX);
+        } else {
+            *ppv = 0;
+            return ERR_ECO_NOINTERFACE;
+        }
+    }
+    else if ( IsEqualUGUID(riid, &IID_IEcoCalculatorY) ) {
+        if (pCMe->m_pIY == 0) {
+            /* Попытка получить интерфейс через агрегирование */
+            IEcoInterfaceBus1* pIBus = 0;
+            int16_t result = pCMe->m_pISys->pVTbl->QueryInterface(pCMe->m_pISys, &IID_IEcoInterfaceBus1, (void **)&pIBus);
+            if (result == 0 && pIBus != 0) {
+                /* Пробуем получить компонент E (агрегирует B) */
+                result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorE, pCMe->m_pIUnkOuter, &IID_IEcoCalculatorY, (void**) &pCMe->m_pIY);
+                if (result != 0 || pCMe->m_pIY == 0) {
+                    /* Пробуем получить компонент D (включает A) */
+                    result = pIBus->pVTbl->QueryComponent(pIBus, &CID_EcoCalculatorD, pCMe->m_pIUnkOuter, &IID_IEcoCalculatorY, (void**) &pCMe->m_pIY);
+                }
+                pIBus->pVTbl->Release(pIBus);
+            }
+        }
+        if (pCMe->m_pIY != 0) {
+            *ppv = pCMe->m_pIY;
+            pCMe->m_pIY->pVTbl->AddRef(pCMe->m_pIY);
         } else {
             *ppv = 0;
             return ERR_ECO_NOINTERFACE;
@@ -645,6 +707,7 @@ IEcoLab1VTbl g_x277FC00C35624096AFCFC125B94EEC90VTbl = {
     CEcoLab1_MyFunction
 };
 
+
 int16_t ECOCALLMETHOD createCEcoLab1(/* in */ IEcoUnknown* pIUnkSystem, /* in */ IEcoUnknown* pIUnkOuter, /* out */ IEcoLab1** ppIEcoLab1) {
     int16_t result = -1;
     IEcoSystem1* pISys = 0;
@@ -656,6 +719,13 @@ int16_t ECOCALLMETHOD createCEcoLab1(/* in */ IEcoUnknown* pIUnkSystem, /* in */
 
     if (ppIEcoLab1 == 0 || pIUnkSystem == 0) {
         return result;
+    }
+
+    if (pIUnkOuter != 0) {
+        result = pIUnkOuter->pVTbl->QueryInterface(pIUnkOuter, &IID_IEcoLab1, (void**)ppIEcoLab1);
+        if (result == 0) {
+            return result;
+        }
     }
 
     result = pIUnkSystem->pVTbl->QueryInterface(pIUnkSystem, &GID_IEcoSystem, (void **)&pISys);
@@ -696,6 +766,9 @@ int16_t ECOCALLMETHOD createCEcoLab1(/* in */ IEcoUnknown* pIUnkSystem, /* in */
     pCMe->m_pVTblIEcoLab1 = &g_x277FC00C35624096AFCFC125B94EEC90VTbl;
     pCMe->m_Name = 0;
     pCMe->m_pILinearAlgebra = 0;
+    pCMe->m_pIX = 0;
+    pCMe->m_pIY = 0;
+    pCMe->m_pIUnkOuter = pIUnkOuter;
 
     *ppIEcoLab1 = (IEcoLab1*)pCMe;
 
@@ -715,6 +788,12 @@ void ECOCALLMETHOD deleteCEcoLab1(/* in */ IEcoLab1* pIEcoLab1) {
         }
         if ( pCMe->m_pILinearAlgebra != 0 ) {
             pCMe->m_pILinearAlgebra->pVTbl->Release(pCMe->m_pILinearAlgebra);
+        }
+        if ( pCMe->m_pIX != 0 ) {
+            pCMe->m_pIX->pVTbl->Release(pCMe->m_pIX);
+        }
+        if ( pCMe->m_pIY != 0 ) {
+            pCMe->m_pIY->pVTbl->Release(pCMe->m_pIY);
         }
         if ( pCMe->m_pISys != 0 ) {
             pCMe->m_pISys->pVTbl->Release(pCMe->m_pISys);

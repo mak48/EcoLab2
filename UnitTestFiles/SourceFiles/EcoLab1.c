@@ -1,31 +1,16 @@
-﻿/*
- * <кодировка символов>
- *   Cyrillic (UTF-8 with signature) - Codepage 65001
- * </кодировка символов>
- *
- * <сводка>
- *   EcoLab1
- * </сводка>
- *
- * <описание>
- *   Данный исходный файл является точкой входа
- * </описание>
- *
- * <автор>
- *   Copyright (c) 2018 Vladimir Bashev. All rights reserved.
- * </автор>
- *
- */
-
-#include "IEcoSystem1.h"
+﻿#include "IEcoSystem1.h"
 #include "IdEcoMemoryManager1.h"
 #include "IdEcoInterfaceBus1.h"
 #include "IdEcoFileSystemManagement1.h"
 #include "IdEcoLab1.h"
 #include <stdio.h>
 #include <windows.h>
-
-/* Функции для вывода матриц и векторов */
+#include "IEcoCalculatorX.h"
+#include "IEcoCalculatorY.h"
+#include "IdEcoCalculatorA.h"
+#include "IdEcoCalculatorB.h"
+#include "IdEcoCalculatorD.h"
+#include "IdEcoCalculatorE.h"
 void print_vector(IEcoVector* pVector, const char* name) {
     uint32_t i = 0;
     uint32_t size = 0;
@@ -42,7 +27,6 @@ void print_vector(IEcoVector* pVector, const char* name) {
         printf("]\n");
     }
 }
-
 void print_matrix(IEcoMatrix* pMatrix, const char* name) {
     uint32_t i = 0;
     uint32_t j = 0;
@@ -63,17 +47,6 @@ void print_matrix(IEcoMatrix* pMatrix, const char* name) {
     }
 }
 
-/*
- *
- * <сводка>
- *   Функция EcoMain
- * </сводка>
- *
- * <описание>
- *   Функция EcoMain - точка входа
- * </описание>
- *
- */
 int16_t EcoMain(IEcoUnknown* pIUnk) {
     int16_t result = -1;
     IEcoSystem1* pISys = 0;
@@ -81,8 +54,12 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
     IEcoMemoryAllocator1* pIMem = 0;
     char_t* name = 0;
     char_t* copyName = 0;
+    
     IEcoLab1* pIEcoLab1 = 0;
     IEcoLinearAlgebra* pILinearAlgebra = 0;
+    struct IEcoCalculatorX* pIX = 0;
+    struct IEcoCalculatorY* pIY = 0;
+    
     IEcoVector* pVector = 0;
     IEcoMatrix* pMatrix = 0;
     IEcoVector* pDiagVector = 0;
@@ -91,20 +68,13 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
     LARGE_INTEGER start;
     LARGE_INTEGER end;
     double time_taken = 0.0;
-    double manual_time = 0.0;
-    double diag_time = 0.0;
+    int32_t calc_result = 0;
     uint32_t i = 0;
     uint32_t j = 0;
-    uint32_t k = 0;
-    uint32_t large_size = 0;
-    uint32_t test_size = 0;
-    IEcoMatrix* pRectMatrix = 0;
-    IEcoVector* pRectDiag = 0;
-    IEcoVector* pLargeVector = 0;
-    IEcoMatrix* pLargeMatrix = 0;
-    IEcoMatrix* pManualMatrix = 0;
-    IEcoMatrix* pDiagMatrix = 0;
-    IEcoVector* pTestVector = 0;
+
+    /* Дополнительные переменные для теста 4 */
+	struct IEcoCalculatorX* pIX2 = 0;
+    struct IEcoLab1* pIEcoLab1_2 = 0;
 
     /* Проверка и создание системного интрефейса */
     if (pISys == 0) {
@@ -121,6 +91,27 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
     }
 
 #ifdef ECO_LIB
+    /* Регистрация ВСЕХ компонентов калькулятора */
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorA, (IEcoUnknown*)GetIEcoComponentFactoryPtr_4828F6552E4540E78121EBD220DC360E);
+    if (result != 0 ) {
+        printf("Failed to register CalculatorA\n");
+    }
+    
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorB, (IEcoUnknown*)GetIEcoComponentFactoryPtr_AE202E543CE54550899603BD70C62565);
+    if (result != 0 ) {
+        printf("Failed to register CalculatorB\n");
+    }
+    
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorD, (IEcoUnknown*)GetIEcoComponentFactoryPtr_3A8E44677E82475CB4A3719ED8397E61);
+    if (result != 0 ) {
+        printf("Failed to register CalculatorD\n");
+    }
+    
+    result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoCalculatorE, (IEcoUnknown*)GetIEcoComponentFactoryPtr_872FEF1DE3314B87AD44D1E7C232C2F0);
+    if (result != 0 ) {
+        printf("Failed to register CalculatorE\n");
+    }
+
     /* Регистрация статического компонента для работы со списком */
     result = pIBus->pVTbl->RegisterComponent(pIBus, &CID_EcoLab1, (IEcoUnknown*)GetIEcoComponentFactoryPtr_1F5DF16EE1BF43B999A434ED38FE8F3A);
     if (result != 0 ) {
@@ -144,91 +135,114 @@ int16_t EcoMain(IEcoUnknown* pIUnk) {
         goto Release;
     }
 
+    /* Тест 1: Получение IEcoLinearAlgebra через QueryInterface */
+    printf("Test 1: IEcoLinearAlgebra through QueryInterface\n");
     result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoLinearAlgebra, (void**)&pILinearAlgebra);
-    if (result != 0 || pILinearAlgebra == 0) {
-        goto Release;
-    }
-    QueryPerformanceFrequency(&frequency);
-
-    /* Тест 1: создание матрицы с заданными диагональными элементами (diag)*/
-    printf("Test 1\n");
-    QueryPerformanceCounter(&start);
-
-    pVector = pILinearAlgebra->pVTbl->new_Vector(pILinearAlgebra, 3);
-    pVector->pVTbl->set_Element(pVector, 0, 1.0);
-    pVector->pVTbl->set_Element(pVector, 1, 2.0);
-    pVector->pVTbl->set_Element(pVector, 2, 3.0);
-    pMatrix = pILinearAlgebra->pVTbl->set_Diag(pILinearAlgebra, pVector);
-
-    QueryPerformanceCounter(&end);
-    time_taken = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
-
-    print_vector(pVector, "Input vector");
-    print_matrix(pMatrix, "Matrix");
-    printf("Time: %.6f sec\n\n", time_taken);
-
-    /* Тест 2: получение диагонали из матрицы */
-    printf("Test 2\n");
-    QueryPerformanceCounter(&start);
-
-    pDiagVector = pILinearAlgebra->pVTbl->get_Diag(pILinearAlgebra, pMatrix);
-
-    QueryPerformanceCounter(&end);
-    time_taken = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
-
-    print_matrix(pMatrix, "Matrix");
-    print_vector(pDiagVector, "Vector");
-    printf("Time: %.6f sec\n\n", time_taken);
-
-    /* Тест 3: неквадратная матрица */
-    printf("Test 3\n");
-    pRectMatrix = pILinearAlgebra->pVTbl->new_Matrix(pILinearAlgebra, 2, 3);
-    for (i = 0; i < 2; i++) {
-        for (j = 0; j < 3; j++) {
-            pRectMatrix->pVTbl->set_Element(pRectMatrix, i, j, (double)(i * 3 + j + 1));
-        }
-    }
-
-    QueryPerformanceCounter(&start);
-    pRectDiag = pILinearAlgebra->pVTbl->get_Diag(pILinearAlgebra, pRectMatrix);
-    QueryPerformanceCounter(&end);
-    time_taken = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
-
-    print_matrix(pRectMatrix, "Matrix");
-    print_vector(pRectDiag, "Vector");
-    printf("Time: %.6f sec\n\n", time_taken);
-
-    /* Тест 4: матрицы с размером от 100х100 до 1000х1000 */
-    printf("Test 4\n");
-    printf("Size    | Time (seconds)\n");
-    printf("--------|----------------\n");
-    
-    for (test_size = 100; test_size <= 1000; test_size += 100) {
-        pLargeVector = pILinearAlgebra->pVTbl->new_Vector(pILinearAlgebra, test_size);
-        for (i = 0; i < test_size; i++) {
-            pLargeVector->pVTbl->set_Element(pLargeVector, i, (double)(i + 1));
-        }
-
-        QueryPerformanceCounter(&start);
-        pLargeMatrix = pILinearAlgebra->pVTbl->set_Diag(pILinearAlgebra, pLargeVector);
-        QueryPerformanceCounter(&end);
-        time_taken = (double)(end.QuadPart - start.QuadPart) / frequency.QuadPart;
-
-        printf("%dx%-5d | %.7f\n", test_size, test_size, time_taken);
-
-        if (pLargeVector != 0) {
-            pLargeVector->pVTbl->Release(pLargeVector);
-            pLargeVector = 0;
-        }
-        if (pLargeMatrix != 0) {
-            pLargeMatrix->pVTbl->Release(pLargeMatrix);
-            pLargeMatrix = 0;
-        }
+    if (result == 0 && pILinearAlgebra != 0) {
+        printf("Successfull: IEcoLinearAlgebra\n");
+        
+        /* Демонстрация работы с линейной алгеброй */
+        pVector = pILinearAlgebra->pVTbl->new_Vector(pILinearAlgebra, 3);
+        pVector->pVTbl->set_Element(pVector, 0, 1.0);
+        pVector->pVTbl->set_Element(pVector, 1, 2.0);
+        pVector->pVTbl->set_Element(pVector, 2, 3.0);
+        pMatrix = pILinearAlgebra->pVTbl->set_Diag(pILinearAlgebra, pVector);
+        
+        print_vector(pVector, "Vector");
+        print_matrix(pMatrix, "Diag matrix");
+        
+        pILinearAlgebra->pVTbl->Release(pILinearAlgebra);
+        pILinearAlgebra = 0;
+    } else {
+        printf("Didnt receive IEcoLinearAlgebra\n");
     }
     printf("\n");
+
+    /* Тест 2: Получение IEcoCalculatorX через QueryInterface */
+    printf("Test 2: IEcoCalculatorX through QueryInterface\n");
+
+    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**)&pIX);
+    if (result == 0 && pIX != 0) {
+        printf("Successfull: IEcoCalculatorX\n");
+        
+        /* Демонстрация работы с калькулятором */
+        calc_result = pIX->pVTbl->Addition(pIX, 3, 5);
+        printf("3 + 5 = %d\n", calc_result);
+        
+        calc_result = pIX->pVTbl->Subtraction(pIX, 10, 4);
+        printf("10 - 4 = %d\n", calc_result);
+        
+        pIX->pVTbl->Release(pIX);
+        pIX = 0;
+    } else {
+        printf("Didnt receive IEcoCalculatorX\n");
+    }
+    printf("\n");
+
+    /* Тест 3: Получение IEcoCalculatorY через QueryInterface */
+    printf("Test 3: IEcoCalculatorY through QueryInterface\n");
+    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorY, (void**)&pIY);
+    if (result == 0 && pIY != 0) {
+        printf("Successfull: IEcoCalculatorY\n");
+        
+        /* Демонстрация работы с калькулятором */
+        calc_result = pIY->pVTbl->Multiplication(pIY, 3, 5);
+        printf("3 * 5 = %d\n", calc_result);
+        
+        calc_result = pIY->pVTbl->Division(pIY, 15, 3);
+        printf("15 / 3 = %d\n", calc_result);
+        
+        pIY->pVTbl->Release(pIY);
+        pIY = 0;
+    } else {
+        printf("Didnt receive IEcoCalculatorY\n");
+    }
+    printf("\n");
+
+    /* Тест 4: Демонстрация свойств интерфейсов */
+    printf("Test 4\n");
+    
+    /* Получаем IX из Lab1 */
+    result = pIEcoLab1->pVTbl->QueryInterface(pIEcoLab1, &IID_IEcoCalculatorX, (void**)&pIX);
+    if (result == 0 && pIX != 0) {
+        printf("1. Successfull: IX from IEcoLab1\n");
+        
+        /* Из IX получить IY */
+        result = pIX->pVTbl->QueryInterface(pIX, &IID_IEcoCalculatorY, (void**)&pIY);
+        if (result == 0 && pIY != 0) {
+            printf("2. Successfull: IY from IX\n");
+            
+            /* Из IY получить обратно IX */
+            result = pIY->pVTbl->QueryInterface(pIY, &IID_IEcoCalculatorX, (void**)&pIX2);
+            if (result == 0 && pIX2 != 0) {
+                printf("3. Successfull: IX from IY\n");
+                
+                /* Проверяем */
+                calc_result = pIX2->pVTbl->Addition(pIX2, 7, 3);
+                printf("7 + 3 = %d (from pIX2)\n", calc_result);
+                
+                pIX2->pVTbl->Release(pIX2);
+            }
+            
+            /* Из IY получить IEcoLab1 */
+            result = pIY->pVTbl->QueryInterface(pIY, &IID_IEcoLab1, (void**)&pIEcoLab1_2);
+            if (result == 0 && pIEcoLab1_2 != 0) {
+                printf("4. Successfull: IEcoLab1 from IY\n");
+                pIEcoLab1_2->pVTbl->Release(pIEcoLab1_2);
+            }
+            
+            pIY->pVTbl->Release(pIY);
+            pIY = 0;
+        }
+        
+        pIX->pVTbl->Release(pIX);
+        pIX = 0;
+    }
+    printf("\n");
+
     result = pIEcoLab1->pVTbl->MyFunction(pIEcoLab1, name, &copyName);
 
-    /* Освлбождение блока памяти */
+    /* Освобождение блока памяти */
     pIMem->pVTbl->Free(pIMem, name);
 
 Release:
@@ -242,29 +256,20 @@ Release:
     if (pDiagVector != 0) {
         pDiagVector->pVTbl->Release(pDiagVector);
     }
-    if (pRectMatrix != 0) {
-        pRectMatrix->pVTbl->Release(pRectMatrix);
-    }
-    if (pRectDiag != 0) {
-        pRectDiag->pVTbl->Release(pRectDiag);
-    }
-    if (pLargeVector != 0) {
-        pLargeVector->pVTbl->Release(pLargeVector);
-    }
-    if (pLargeMatrix != 0) {
-        pLargeMatrix->pVTbl->Release(pLargeMatrix);
-    }
-    if (pManualMatrix != 0) {
-        pManualMatrix->pVTbl->Release(pManualMatrix);
-    }
-    if (pDiagMatrix != 0) {
-        pDiagMatrix->pVTbl->Release(pDiagMatrix);
-    }
-    if (pTestVector != 0) {
-        pTestVector->pVTbl->Release(pTestVector);
-    }
     if (pILinearAlgebra != 0) {
         pILinearAlgebra->pVTbl->Release(pILinearAlgebra);
+    }
+    if (pIX != 0) {
+        pIX->pVTbl->Release(pIX);
+    }
+    if (pIY != 0) {
+        pIY->pVTbl->Release(pIY);
+    }
+    if (pIX2 != 0) {
+        pIX2->pVTbl->Release(pIX2);
+    }
+    if (pIEcoLab1_2 != 0) {
+        pIEcoLab1_2->pVTbl->Release(pIEcoLab1_2);
     }
 
     /* Освобождение интерфейса для работы с интерфейсной шиной */
